@@ -1,68 +1,81 @@
 'use strict';
 
-let player0El = document.querySelector('.player--0');
-let player1El = document.querySelector('.player--1');
-let score0El = document.querySelector('#score--0');
-let score1El = document.querySelector('#score--1');
-let current0El = document.querySelector('#current--0');
-let current1El = document.querySelector('#current--1');
-let dice = document.querySelector('.dice');
-let btnRoll = document.querySelector('.btn--roll');
-let btnHold = document.querySelector('.btn--hold');
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// BANKIST APP
 
-score0El.textContent = 0;
-score1El.textContent = 0;
-dice.classList.add('hidden');
-
-let currentPlayer = 0;
-let currentScore = 0;
-let scores = [0, 0];
-let playing = true;
-
-let switchPlayer = function () {
-  document.querySelector(`#current--${currentPlayer}`).textContent = 0;
-  currentScore = 0;
-  currentPlayer = currentPlayer === 0 ? 1 : 0;
-  player0El.classList.toggle('player--active');
-  player1El.classList.toggle('player--active');
+// Data
+const account1 = {
+  owner: 'Jonas Schmedtmann',
+  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  interestRate: 1.2, // %
+  pin: 1111,
 };
 
-btnRoll.addEventListener('click', function () {
-  if (playing) {
-    let diceNumber = Math.trunc(Math.random() * 6) + 1;
-    dice.classList.remove('hidden');
-    dice.src = `dice-${diceNumber}.png`;
+const account2 = {
+  owner: 'Jessica Davis',
+  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  interestRate: 1.5,
+  pin: 2222,
+};
 
-    if (diceNumber !== 1) {
-      currentScore += diceNumber;
-      document.querySelector(`#current--${currentPlayer}`).textContent =
-        currentScore;
-    } else {
-      switchPlayer();
-    }
-  }
-});
+const account3 = {
+  owner: 'Steven Thomas Williams',
+  movements: [200, -200, 340, -300, -20, 50, 400, -460],
+  interestRate: 0.7,
+  pin: 3333,
+};
 
-btnHold.addEventListener('click', function () {
-  if (playing) {
-    scores[currentPlayer] += currentScore;
+const account4 = {
+  owner: 'Sarah Smith',
+  movements: [430, 1000, 700, 50, 90],
+  interestRate: 1,
+  pin: 4444,
+};
 
-    document.querySelector(`#score--${currentPlayer}`).textContent =
-      scores[currentPlayer];
+const accounts = [account1, account2, account3, account4];
 
-    if (scores[currentPlayer] >= 20) {
-      playing = false;
+// Elements
+const labelWelcome = document.querySelector('.welcome');
+const labelDate = document.querySelector('.date');
+const labelBalance = document.querySelector('.balance__value');
+const labelSumIn = document.querySelector('.summary__value--in');
+const labelSumOut = document.querySelector('.summary__value--out');
+const labelSumInterest = document.querySelector('.summary__value--interest');
+const labelTimer = document.querySelector('.timer');
 
-      document
-        .querySelector(`.player--${currentPlayer}`)
-        .classList.add('player--winner');
-      document
-        .querySelector(`.player--${currentPlayer}`)
-        .classList.remove('player--active');
+const containerApp = document.querySelector('.app');
+const containerMovements = document.querySelector('.movements');
 
-      dice.classList.add('hidden');
-    } else {
-      switchPlayer();
-    }
-  }
-});
+const btnLogin = document.querySelector('.login__btn');
+const btnTransfer = document.querySelector('.form__btn--transfer');
+const btnLoan = document.querySelector('.form__btn--loan');
+const btnClose = document.querySelector('.form__btn--close');
+const btnSort = document.querySelector('.btn--sort');
+
+const inputLoginUsername = document.querySelector('.login__input--user');
+const inputLoginPin = document.querySelector('.login__input--pin');
+const inputTransferTo = document.querySelector('.form__input--to');
+const inputTransferAmount = document.querySelector('.form__input--amount');
+const inputLoanAmount = document.querySelector('.form__input--loan-amount');
+const inputCloseUsername = document.querySelector('.form__input--user');
+const inputClosePin = document.querySelector('.form__input--pin');
+
+const displayMovements = function (movement) {
+  movement.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+      <div class="movements__value">${mov}</div>
+    </div>
+    `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+displayMovements(account1.movements);
