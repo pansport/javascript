@@ -61,6 +61,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+/* DISPLAYING MOVEMENTS */
+
 const displayMovements = function (movement) {
   containerMovements.innerHTML = '';
 
@@ -79,13 +81,39 @@ const displayMovements = function (movement) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
+
+/* CALCULATING/DISPLAYING BALANCE */
 
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, movement) => acc + movement, 0);
   labelBalance.textContent = `${balance}€`;
 };
-calcDisplayBalance(account1.movements);
+
+/* CALCULATING/DISPLAYING SUMMARY */
+
+const calcDisplaySummary = function (account) {
+  const incomes = account.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumIn.innerHTML = `${incomes}€`;
+
+  const withdrawals = Math.abs(
+    account.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0)
+  );
+
+  labelSumOut.innerHTML = `${withdrawals}€`;
+
+  const interest = account.movements
+    .filter(mov => mov > 0)
+    .map(mov => (mov * account.interestRate) / 100)
+    .filter(mov => mov >= 1)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumInterest.innerHTML = `${interest}€`;
+};
+
+/* CREATING USERNAME FOR LOGIN */
 
 const createUserName = function (accs) {
   accs.forEach(function (acc) {
@@ -98,5 +126,37 @@ const createUserName = function (accs) {
 };
 createUserName(accounts);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+/* LOGIN FUNCTIONALITY */
 
+let currentAccount;
+
+btnLogin.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  currentAccount = accounts.find(
+    account => account.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display message
+
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+
+    // Display UI
+
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Display movement, ballance and summary
+
+    displayMovements(currentAccount.movements);
+    calcDisplayBalance(currentAccount.movements);
+    calcDisplaySummary(currentAccount);
+  }
+});
