@@ -69,10 +69,12 @@ const displayUI = function (account) {
 
 /* DISPLAYING MOVEMENTS */
 
-const displayMovements = function (movement) {
+const displayMovements = function (movement, sort = false) {
   containerMovements.innerHTML = '';
 
-  movement.forEach(function (mov, i) {
+  const movementSort = sort ? movement.slice().sort((a, b) => a - b) : movement;
+
+  movementSort.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -227,11 +229,27 @@ btnClose.addEventListener('click', function (event) {
   inputCloseUsername.value = inputClosePin.value = '';
 });
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+let sorted = false;
+btnSort.addEventListener('click', function (event) {
+  event.preventDefault();
 
-movements.sort((a, b) => {
-  if (a > b) return 1;
-  if (a < b) return -1;
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
-console.log(movements);
+const convertTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
