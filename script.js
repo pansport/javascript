@@ -98,6 +98,13 @@ const formatDisplayMovements = (date, local) => {
   }
 };
 
+const formatCurr = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+};
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -112,13 +119,15 @@ const displayMovements = function (acc, sort = false) {
 
     const displayDate = formatDisplayMovements(date, acc.local);
 
+    const formattedMov = formatCurr(mov, acc.locale, acc.currency);
+
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${formattedMov}</div>
       </div>
     `;
 
@@ -128,19 +137,20 @@ const displayMovements = function (acc, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  const formattedMov = formatCurr(acc.balance, acc.locale, acc.currency);
+  labelBalance.textContent = formattedMov;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = formatCurr(incomes, acc.locale, acc.currency);
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = formatCurr(Math.abs(out), acc.locale, acc.currency);
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -150,7 +160,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = formatCurr(interest, acc.locale, acc.currency);
 };
 
 const createUsernames = function (accs) {
@@ -269,14 +279,16 @@ btnLoan.addEventListener('click', function (e) {
   const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Adding the date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Adding the date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -315,10 +327,11 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-// const future = new Date(2037, 10, 19, 15, 23);
-// console.log(+future);
+// setInterval(() => {
+//   const now = new Date();
+//   const hour = now.getHours();
+//   const minutes = now.getMinutes();
+//   const seconds = now.getSeconds();
 
-// const calcDaysPassed = (date1, date2) =>
-//   Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
-
-// console.log(calcDaysPassed(new Date(2037, 10, 19), new Date(2037, 10, 9)));
+//   console.log(`${hour}:${minutes}:${seconds}`);
+// }, 1000);
