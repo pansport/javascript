@@ -30,27 +30,37 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-//////////////////////////////////////////////
-//////////////////////////////////////////////
-//////////////////////////////////////////////
+// smooth scrolling
 
-// creating and inserting elements
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-// message.textContent
-message.innerHTML = `We use cookies for improved functionality and analytics. <button class='btn btn--class-cookie'>Got it!</button>`;
+btnScrollTo.addEventListener('click', () => {
+  const section1coords = section1.getBoundingClientRect();
 
-document.querySelector('.header').append(message);
-
-document.querySelector('.btn--class-cookie').addEventListener('click', () => {
-  message.remove();
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-// styles
+// page navigation
+// 1
+// document.querySelectorAll('.nav__link').forEach(function (link) {
+//   link.addEventListener('click', function (event) {
+//     event.preventDefault();
+//     const id = link.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
 
-message.style.backgroundColor = '#37383d';
-message.style.width = '103%';
+// 2
 
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
+document.querySelector('.nav__links').addEventListener('click', event => {
+  if (event.target.classList.contains('nav__link')) {
+    event.preventDefault();
+    const id = event.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+//////////////////////////////////////////////
