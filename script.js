@@ -30,18 +30,19 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+///////////////////////////////////////
 // smooth scrolling
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', () => {
-  const section1coords = section1.getBoundingClientRect();
-
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+///////////////////////////////////////
 // page navigation
+
 // 1
 // document.querySelectorAll('.nav__link').forEach(function (link) {
 //   link.addEventListener('click', function (event) {
@@ -52,7 +53,6 @@ btnScrollTo.addEventListener('click', () => {
 // });
 
 // 2
-
 document.querySelector('.nav__links').addEventListener('click', event => {
   if (event.target.classList.contains('nav__link')) {
     event.preventDefault();
@@ -61,6 +61,30 @@ document.querySelector('.nav__links').addEventListener('click', event => {
   }
 });
 
+///////////////////////////////////////
+// tabbed component
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', event => {
+  const clicked = event.target.closest('.operations__tab');
+
+  if (!clicked) return;
+
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+
+  clicked.classList.add('operations__tab--active');
+
+  tabsContent.forEach(tab =>
+    tab.classList.remove('operations__content--active')
+  );
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
 //////////////////////////////////////////////
 //////////////////////////////////////////////
 //////////////////////////////////////////////
