@@ -252,37 +252,105 @@
 
 ///////////////////////////////////////////////////////////
 
-class Account {
-  constructor(owner, currency, pin) {
-    this.owner = owner;
-    this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
-    this.locale = navigator.language;
-  }
+// class Account {
+//   // 1. public fields
+//   locale = navigator.language;
+//   // _movements = [];
 
-  deposit(value) {
-    this.movements.push(value);
-  }
+//   // 2. private fields
+//   #movements = [];
+//   #pin;
 
-  withdraw(value) {
-    this.deposit(-value);
-  }
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.#pin = pin;
+//     // this._movements = [];
+//     // this.locale = navigator.language;
+//   }
 
-  approveLoan(value) {
-    if (value <= 1000) return true;
-  }
+//   getMovements() {
+//     return this.#movements;
+//   }
 
-  requestLoan(value) {
-    if (this.approveLoan(value)) {
-      this.deposit(value);
-      console.log('Loan approved!');
-    }
-  }
-}
+//   deposit(value) {
+//     this.#movements.push(value);
+//   }
 
-const acc1 = new Account('Jonas', 'EUR', 1111);
-acc1.deposit(500);
-acc1.withdraw(450);
-acc1.requestLoan(980);
-console.log(acc1);
+//   withdraw(value) {
+//     this.deposit(-value);
+//   }
+
+//   approveLoan(value) {
+//     if (value <= 1000) return true;
+//   }
+
+//   requestLoan(value) {
+//     if (this.approveLoan(value)) {
+//       this.deposit(value);
+//       console.log('Loan approved!');
+//     }
+//   }
+// }
+
+// const acc1 = new Account('Jonas', 'EUR', 1111);
+// acc1.deposit(500);
+// acc1.withdraw(450);
+// acc1.requestLoan(980);
+// console.log(acc1);
+// console.log(acc1.getMovements());
+
+///////////////////////////////////////////////////////////
+// Coding challenge #4
+
+// class CarCl {
+//   constructor(make, speed) {
+//     this.make = make;
+//     this.speed = speed;
+//   }
+
+//   accelerate() {
+//     this.speed += 10;
+//     console.log(`${this.make} is going at ${this.speed} km/h`);
+//   }
+
+//   brake() {
+//     this.speed -= 5;
+//     console.log(`${this.make} is going at ${this.speed} km/h`);
+//     return this;
+//   }
+
+//   get speedUS() {
+//     return this.speed / 1.6;
+//   }
+
+//   set speedUS(speed) {
+//     this.speed = speed * 1.6;
+//   }
+// }
+
+// class EVCl extends CarCl {
+//   #charge;
+
+//   constructor(make, speed, charge) {
+//     super(make, speed);
+//     this.#charge = charge;
+//   }
+
+//   chargeBattery(chargeTo) {
+//     this.#charge = chargeTo;
+//     return this;
+//   }
+
+//   accelerate() {
+//     this.speed += 20;
+//     this.#charge -= 1;
+//     console.log(
+//       `Tesla going at ${this.speed} km/h, with a charge of ${this.#charge}%`
+//     );
+//     return this;
+//   }
+// }
+
+// const car5 = new EVCl('Rivian', 120, 23);
+// console.log(car5);
