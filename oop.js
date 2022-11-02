@@ -179,3 +179,110 @@
 // console.log(car4);
 
 ///////////////////////////////////////////////////////////
+
+// class PersonClass {
+//   constructor(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   }
+
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+
+//   set firstName(name) {
+//     if (name.includes(' ')) this._firstName = name;
+//     else alert(`${name} is not a full name!`);
+//   }
+
+//   get firstName() {
+//     return this._firstName;
+//   }
+// }
+
+// class StudendClass extends PersonClass {
+//   constructor(firstName, birthYear, course) {
+//     super(firstName, birthYear);
+//     this.course = course;
+//   }
+
+//   introduce() {
+//     console.log(
+//       `Hello, my name is ${this.firstName} and i study ${this.course}`
+//     );
+//   }
+
+//   calcAge() {
+//     console.log(
+//       `I am ${2037 - this.birthYear} years old but i feel like ${
+//         2037 - this.birthYear + 5
+//       }`
+//     );
+//   }
+// }
+
+// const martha = new StudendClass('Martha Jones', 2005, 'Math');
+// martha.calcAge();
+
+///////////////////////////////////////////////////////////
+
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
+
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
+
+// const steven = Object.create(PersonProto);
+
+// const StudentProto = Object.create(PersonProto);
+
+// StudentProto.init = function (firstName, birthYear, course) {
+//   PersonProto.init.call(this, firstName, birthYear);
+//   this.course = course;
+// };
+
+// const jonas = Object.create(StudentProto);
+// jonas.init('Jonas', 1991, 'Computer Science');
+// jonas.calcAge();
+
+///////////////////////////////////////////////////////////
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+  }
+
+  deposit(value) {
+    this.movements.push(value);
+  }
+
+  withdraw(value) {
+    this.deposit(-value);
+  }
+
+  approveLoan(value) {
+    if (value <= 1000) return true;
+  }
+
+  requestLoan(value) {
+    if (this.approveLoan(value)) {
+      this.deposit(value);
+      console.log('Loan approved!');
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+acc1.deposit(500);
+acc1.withdraw(450);
+acc1.requestLoan(980);
+console.log(acc1);
