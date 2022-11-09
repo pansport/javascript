@@ -341,11 +341,17 @@ const getPosition = () => {
 };
 
 const whereAmI = async function (country) {
-  const response = await fetch(
-    `https://restcountries.com/v3.1/name/${country}`
-  );
-  const [data] = await response.json();
-  renderCountry(data);
+  try {
+    const response = await fetch(
+      `https://restcountries.com/v3.1/name/${country}`
+    );
+    if (!response.ok) throw new Error('Problem getting country');
+    const [data] = await response.json();
+    renderCountry(data);
+  } catch (error) {
+    console.error(error);
+    renderError(`💥 ${error.message}`);
+  }
 };
 
 whereAmI('portugal');
