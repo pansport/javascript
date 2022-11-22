@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 80px;
+  font-weight: 100;
+  margin-bottom: 50px;
+}
+
+.container {
+  width: 80%;
+  margin: 100px auto;
+  text-align: center;
+}
+
+input[type="text"] {
+  width: 100%;
+  height: 30px;
+  font-size: 30px;
+  padding: 30px 20px;
+}
+
+button {
+  margin-top: 50px;
+  padding: 15px 50px;
+  border: none;
+  background-color: green;
+  color: white;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
