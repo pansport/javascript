@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 100px 200px;
+}
+
+.grid {
+  height: 600px;
+  width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.field {
+  height: 200px;
+  width: 200px;
+  border: 1px solid black;
+}
+
+.mole {
+  background-image: url("mole.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.start-game {
+  background: transparent;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: 2px solid green;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}

@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  width: 80%;
+  height: 700px;
+  border: 1px solid black;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 40px;
+  margin-top: 10px;
+  color: green;
+}
+
+input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-1 {
+  display: flex;
+  font-size: 30px;
+  gap: 15px;
+  margin-top: 20px;
+  width: 80%;
+}
+.input-2 {
+  display: flex;
+  font-size: 30px;
+  gap: 15px;
+  margin-top: 20px;
+}
+.input-3 {
+  display: flex;
+  font-size: 30px;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.inputs {
+  display: flex;
+  width: 60%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.addBtn {
+  padding: 10px 30px;
+  margin-top: 30px;
+  background-color: green;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-x {
+  padding: 5px 10px;
+  background-color: rgb(177, 0, 0);
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+table {
+  margin-top: 50px;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

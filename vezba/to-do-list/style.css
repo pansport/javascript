@@ -1,0 +1,30 @@
+.main {
+  border: 3px solid black;
+  width: 700px;
+  height: 200px;
+  margin: 200px auto 0;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.list {
+  width: 700px;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.list-items {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+input {
+  font-size: 20px;
+}
